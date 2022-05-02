@@ -118,7 +118,7 @@ class BinarySearchTree {
     let previousNode;
     let currentNode = this.tree;
 
-    console.log(currentNode.data, currentNode !== null);
+    console.log(currentNode.data, currentNode !== null, currentNode.data === data);
 
     while(currentNode !== null){
 
@@ -141,26 +141,44 @@ class BinarySearchTree {
                 return;
             }
 
-            /*two directions
+            //two directions
 
-            //1. go right, to the min (=last left)
+            console.log('two directions')
+
+            //1. search for min in right branch -> go right, to the min (=last left)
 
             let candidateToMin = currentNode.right;
             let previousToCandidateToMin = currentNode;
+            let directionToMin = 'right';
 
-            console.log(candidateToMin.left, candidateToMin.left !== null);
+            console.log('previousToCandidateToMin, CandidateToMin  ' + previousToCandidateToMin, candidateToMin);
 
             while(candidateToMin.left !== null){
                 previousToCandidateToMin = candidateToMin;
                 candidateToMin = candidateToMin.left;
-                console.log('previousToCandidateToMin, CandidateToMin  ' + previousToCandidateToMin, candidateToMin);
+                directionToMin = 'left';
+
             }
 
+            // 2. change data in node that is being removed
             currentNode.data = candidateToMin.data;
-            previousToCandidateToMin.left = null;
+            //
+            // 3. delete min node
 
-            */
+                //min is leaf
+                if(candidateToMin.right === null){
+                    previousToCandidateToMin[directionToMin] = null;
+                    return;
+                }
 
+                //min - if one direction - always right (if we search for min in right branch)
+                if(candidateToMin.right !== null){
+                    previousToCandidateToMin[directionToMin] = candidateToMin.right;
+                    return;
+                }
+
+
+            //
             return;
         }
 
@@ -169,7 +187,7 @@ class BinarySearchTree {
             currentNode = currentNode.left;
             direction = 'left';
 
-            console.log('currentNode  ' + currentNode + 'previous - '+ previousNode);
+            console.log(' currentNode.data > data -- currentNode  ' + currentNode + 'previous - '+ previousNode);
 
             continue;
         }
@@ -179,7 +197,7 @@ class BinarySearchTree {
             currentNode = currentNode.right;
             direction = 'right';
 
-            console.log('currentNode  ' + currentNode.data + 'previous - '+ previousNode.data);
+            console.log(' currentNode.data < data -- currentNode  ' + currentNode.data + 'previous - '+ previousNode.data);
 
             continue;
         }
