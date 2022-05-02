@@ -26,7 +26,6 @@ const { ListNode } = require("../extensions/list-node.js");
 function removeKFromList(list, k) {
   // search in first node
   if (list.value === k) {
-    console.log("first value ", list.value);
     list = list.next;
   }
 
@@ -35,8 +34,6 @@ function removeKFromList(list, k) {
   let currentNode = list.next;
 
   while (previousNode.next !== null) {
-    console.log("currentNode.value ", currentNode.value);
-    console.log("previousNode.value ", previousNode.value);
 
     if (currentNode.value === k) {
       previousNode.next = currentNode.next;
