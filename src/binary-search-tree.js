@@ -69,12 +69,12 @@ class BinarySearchTree {
 
         if(currentNode.data > data){
             currentNode = currentNode.left;
-            break;
+            continue;
         }
 
         if(currentNode.data < data){
             currentNode = currentNode.right;
-            break;
+            continue;
         }
 
      }
@@ -107,10 +107,90 @@ class BinarySearchTree {
 
   }
 
+
   remove(data) {
 
+    if (this.tree === null){
+        return null;
+    }
+
+    let direction; //last direction used
+    let previousNode;
+    let currentNode = this.tree;
+
+    console.log(currentNode.data, currentNode !== null);
+
+    while(currentNode !== null){
+
+        if(currentNode.data === data){
+
+            //leaf
+            if(currentNode.left === null && currentNode.right === null){
+                previousNode[direction] = null;
+                return;
+            }
+
+            //one direction
+            if(currentNode.left !== null && currentNode.right === null){
+                previousNode[direction] = currentNode.left;
+                return;
+            }
+
+            if(currentNode.left === null && currentNode.right !== null){
+                previousNode[direction] = currentNode.right;
+                return;
+            }
+
+            /*two directions
+
+            //1. go right, to the min (=last left)
+
+            let candidateToMin = currentNode.right;
+            let previousToCandidateToMin = currentNode;
+
+            console.log(candidateToMin.left, candidateToMin.left !== null);
+
+            while(candidateToMin.left !== null){
+                previousToCandidateToMin = candidateToMin;
+                candidateToMin = candidateToMin.left;
+                console.log('previousToCandidateToMin, CandidateToMin  ' + previousToCandidateToMin, candidateToMin);
+            }
+
+            currentNode.data = candidateToMin.data;
+            previousToCandidateToMin.left = null;
+
+            */
+
+            return;
+        }
+
+        if(currentNode.data > data){
+            previousNode = currentNode;
+            currentNode = currentNode.left;
+            direction = 'left';
+
+            console.log('currentNode  ' + currentNode + 'previous - '+ previousNode);
+
+            continue;
+        }
+
+        if(currentNode.data < data){
+            previousNode = currentNode;
+            currentNode = currentNode.right;
+            direction = 'right';
+
+            console.log('currentNode  ' + currentNode.data + 'previous - '+ previousNode.data);
+
+            continue;
+        }
+    }
+
+    return; // if there's no such node does nothing
 
   }
+
+
+
 
 
 
@@ -149,6 +229,9 @@ class BinarySearchTree {
       return candidateToMax;
   }
 }
+
+
+
 
 module.exports = {
   BinarySearchTree
